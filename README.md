@@ -19,11 +19,8 @@ Zig version 0.15.x
 
 MuJoCo version 3.3.8
 
-<video width="640" height="360" controls>
-  <source src="https://github.com/lab-key/phyzx/blob/main/docs/Functions/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-[Robotic Dog](https://github.com/lab-key/phyzx/blob/main/docs/Functions/demo.mp4)
+https://github.com/user-attachments/assets/df516e11-f744-4ea8-813b-1cb99de78644
+
 Robotic Dog
 
 <video width="640" height="360" controls>
