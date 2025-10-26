@@ -23,10 +23,11 @@ https://github.com/user-attachments/assets/df516e11-f744-4ea8-813b-1cb99de78644
 
 Robotic Dog
 
-<video width="640" height="360" controls>
-  <source src="https://github.com/lab-key/phyzx/blob/main/docs/How-To-DQNAgentC/videos/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+
+https://github.com/user-attachments/assets/398d0165-595a-4706-9103-7d2417a66357
+
+
 2D Self-Learning Agent for playing the snake game being used in a 3D enviroment - using DQNAgentC C framework I am working on. All the code will be here soon!
 
 Working on a self-driving agent that can be loaded by a human & unloads by itself - something like a parking / unloading mode when the target is reached.
