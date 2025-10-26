@@ -23,7 +23,7 @@ MuJoCo version 3.3.8
   <source src="https://github.com/lab-key/phyzx/blob/main/docs/Functions/demo.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
-
+[Robotic Dog](https://github.com/lab-key/phyzx/blob/main/docs/Functions/demo.mp4)
 Robotic Dog
 
 <video width="640" height="360" controls>
