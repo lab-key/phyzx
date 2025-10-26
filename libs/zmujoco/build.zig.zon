@@ -1,0 +1,29 @@
+.{
+    .name = .zmujoco,
+    .fingerprint = 0xd4e1fcf7cbe79808,
+    .version = "0.0.1",
+    .minimum_zig_version = "0.15.1",
+    .dependencies = .{
+        .lib_zmujoco = .{
+            .path = "libs/mujoco",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "libs",
+        "src",
+    },
+//    .dependencies = .{
+//    .mujoco = .{
+//            .path = "libs/mujoco",
+//        },
+//    },
+//    .paths = .{
+//        "build.zig",
+//        "build.zig.zon",
+//        "libs",
+//        "src",
+//    },
+//
+}

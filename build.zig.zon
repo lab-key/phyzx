@@ -1,0 +1,17 @@
+.{
+    .name = .phyzx,
+    .fingerprint = 0x114cf393a7ef77ac,
+    .version = "0.0.1",
+    .minimum_zig_version = "0.15.1",
+    .dependencies = .{
+        .zmujoco = .{
+            .path = "libs/zmujoco",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "libs",
+        "src",
+    },
+}

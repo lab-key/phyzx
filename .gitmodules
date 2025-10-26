@@ -1,0 +1,3 @@
+[submodule "libs/upstream/zmujoco"]
+	path = libs/upstream/zmujoco
+	url = https://github.com/lab-key/zmujoco/
