@@ -1499,17 +1499,6 @@ pub const MjsSensor = struct {
 pub const Model = struct {
     allocator: std.mem.Allocator,
     ptr: *c.mjModel,
-
-    pub fn idFromName(self: *const Model, obj_type: phyzx.ObjType, name: []const u8) !?c_int {
-        const c_name = try self.allocator.allocSentinel(u8, name.len, 0);
-        defer self.allocator.free(c_name);
-        @memcpy(c_name, name);
-
-        const id = phyzx.c.mj_name2id(self.ptr, @intFromEnum(obj_type), c_name.ptr);
-        if (id < 0) return null;
-        return id;
-    }
-
     pub fn initFromXmlPath(allocator: std.mem.Allocator, path: [*:0]const u8, asset_base_path: ?[]const u8) !*Model {
         var vfs: ?*Vfs = null;
         if (asset_base_path) |base_path| {
@@ -1585,6 +1574,27 @@ pub const Model = struct {
         const index: usize = @intCast(joint_id);
         return self.ptr.jnt_dofadr[index];
     }
+
+    // --- New convenience functions for Model ---
+    pub fn getBodyId(self: *const Model, name: []const u8) !c_int {
+        const id = idFromName(self, @intFromEnum(phyzx.ObjType.body), name) orelse return error.ElementNotFound;
+        return id;
+    }
+
+    pub fn getJointId(self: *const Model, name: []const u8) !c_int {
+        const id = idFromName(self, @intFromEnum(phyzx.ObjType.joint), name) orelse return error.ElementNotFound;
+        return id;
+    }
+
+    pub fn getGeomId(self: *const Model, name: []const u8) !c_int {
+        const id = idFromName(self, @intFromEnum(phyzx.ObjType.geom), name) orelse return error.ElementNotFound;
+        return id;
+    }
+
+    pub fn getActuatorId(self: *const Model, name: []const u8) !c_int {
+        const id = idFromName(self, @intFromEnum(phyzx.ObjType.actuator), name) orelse return error.ElementNotFound;
+        return id;
+    }
 };
 
 pub const Data = struct {
@@ -1635,6 +1645,41 @@ pub const Data = struct {
     pub fn bodyRotationMatrix(self: *const Data, body_id: c_int) *const [9]mjtNum {
         const idx: usize = @intCast(body_id);
         return &self.ptr.xmat[idx * 9];
+    }
+
+    // --- New convenience functions for Data ---
+    pub fn getJointPosition(self: *Data, model: *const Model, joint_id: c_int) !mjtNum {
+        const addr = model.jointQPosAddress(joint_id);
+        if (addr < 0 or addr >= model.nq()) return error.ElementNotFound;
+        return self.qpos(model)[addr];
+    }
+
+    pub fn setJointPosition(self: *Data, model: *const Model, joint_id: c_int, value: mjtNum) !void {
+        const addr = model.jointQPosAddress(joint_id);
+        if (addr < 0 or addr >= model.nq()) return error.ElementNotFound;
+        self.qpos(model)[addr] = value;
+    }
+
+    pub fn getJointVelocity(self: *Data, model: *const Model, joint_id: c_int) !mjtNum {
+        const addr = model.jointDoFAddress(joint_id);
+        if (addr < 0 or addr >= model.nv()) return error.ElementNotFound;
+        return self.qvel(model)[addr];
+    }
+
+    pub fn setJointVelocity(self: *Data, model: *const Model, joint_id: c_int, value: mjtNum) !void {
+        const addr = model.jointDoFAddress(joint_id);
+        if (addr < 0 or addr >= model.nv()) return error.ElementNotFound;
+        self.qvel(model)[addr] = value;
+    }
+
+    pub fn getActuatorControl(self: *Data, model: *const Model, actuator_id: c_int) !mjtNum {
+        if (actuator_id < 0 or actuator_id >= model.nu()) return error.ElementNotFound;
+        return self.ctrl(model)[actuator_id];
+    }
+
+    pub fn setActuatorControl(self: *Data, model: *const Model, actuator_id: c_int, value: mjtNum) !void {
+        if (actuator_id < 0 or actuator_id >= model.nu()) return error.ElementNotFound;
+        self.ctrl(model)[actuator_id] = value;
     }
 };
 
@@ -1832,4 +1877,18 @@ pub const Simulation = struct {
     pub fn forward(self: *Simulation) void {
         c.mj_forward(self.model.ptr, self.data.ptr);
     }
+
+    pub fn applyForce(self: *Simulation, body_id: c_int, force: [3]mjtNum, point: [3]mjtNum) void {
+        c.mj_applyFT(self.model.ptr, self.data.ptr, &force, null, &point, body_id, self.data.ptr.qfrc_applied);
+    }
 };
+
+pub fn idFromName(model: *const Model, obj_type: c_uint, name: []const u8) !?c_int {
+    const c_name = try model.allocator.allocSentinel(u8, name.len, 0);
+    defer model.allocator.free(c_name);
+    @memcpy(c_name, name);
+
+    const id = phyzx.c.mj_name2id(model.ptr, @intCast(obj_type), c_name.ptr);
+    if (id < 0) return null;
+    return id;
+}

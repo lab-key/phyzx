@@ -62,7 +62,7 @@ pub fn build(b: *std.Build) !void {
     });
 
     const phyzx_module = b.createModule(.{
-        .root_source_file = b.path("src/phyzx-api.zig"),
+        .root_source_file = b.path("src/phyzx.zig"),
         .target = target,
         .optimize = optimize,
         .imports = &.{

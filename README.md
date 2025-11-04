@@ -54,7 +54,7 @@ zig build
 
 This repository uses my [zmujoco] repository as a git submodule all the files are already fetched & everything is already setup.
 So you don't need the `setup.zig` & `cleanup.zig`
-In case you want to setup your own zmujoco / mujoco repositories. Check their `setup.zig` files and after that the phyzx `setup.zig` to have all the files setup. Configure the `build.zig` files as you like. 
+In case you want to setup your own zmujoco / mujoco repositories. Check their `setup.zig` files and after that the phyzx `setup.zig` to have all the files / additional projects setup. Configure the `build.zig` files as you like. 
 Remember to configure the paths in `build.zig` files according to the way you configured the projects.
 
 ## Current and Future plans / issues - TODO
