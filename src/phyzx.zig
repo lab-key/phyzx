@@ -2,8 +2,6 @@ const std = @import("std");
 pub const phyzx = @import("zmujoco");
 pub const glfw = phyzx.glfw;
 pub const c = phyzx.c;
-pub const c_constants = phyzx.c;
-
 
 pub const ObjType = enum(c.mjtObj) {
     unknown = c.mjOBJ_UNKNOWN,
