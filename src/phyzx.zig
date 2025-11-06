@@ -1,5 +1,11 @@
 const std = @import("std");
 pub const phyzx = @import("zmujoco");
+pub const sim = @import("phyzx-sim");
+pub const renderer = @import("phyzx-render");
+pub const viewer = @import("phyzx-viewer");
+pub const rollout = @import("phyzx-rollout");
+pub const phyzx_znlopt = @import("phyzx-znlopt");
+pub const Optimizer = phyzx_znlopt.Optimizer;
 pub const glfw = phyzx.glfw;
 pub const c = phyzx.c;
 
@@ -38,20 +44,10 @@ pub fn idFromName(model: *Model, obj_type: ObjType, name: []const u8) !?c_int {
 
 }
 
-pub const sim = @import("phyzx-sim");
-pub const renderer = @import("phyzx-render");
-pub const viewer = @import("phyzx-viewer");
-pub const rollout = @import("phyzx-rollout");
-pub const phyzx_znlopt = @import("phyzx-znlopt");
-pub const Optimizer = phyzx_znlopt.Optimizer;
-pub const math = @import("phyzx-math");
-//const minimize = @import("phyzx-minimize");
-
 //==============================================================================
 // Re-Exports of Existing Structs
 //==============================================================================
 
-pub const Vec3 = math.Vec3;
 pub const SpecBuilder = sim.SpecBuilder;
 
 
