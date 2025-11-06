@@ -42,6 +42,8 @@ pub const sim = @import("phyzx-sim");
 pub const renderer = @import("phyzx-render");
 pub const viewer = @import("phyzx-viewer");
 pub const rollout = @import("phyzx-rollout");
+pub const phyzx_znlopt = @import("phyzx-znlopt");
+pub const Optimizer = phyzx_znlopt.Optimizer;
 pub const math = @import("phyzx-math");
 //const minimize = @import("phyzx-minimize");
 

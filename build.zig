@@ -67,7 +67,7 @@ pub fn build(b: *std.Build) !void {
         },
     });
 
-    const phyzx_optimizer_module = b.createModule(.{
+    const phyzx_znlopt_module = b.createModule(.{
         .root_source_file = b.path("src/phyzx-znlopt/optimizer.zig"),
         .target = target,
         .optimize = optimize,
@@ -86,7 +86,7 @@ pub fn build(b: *std.Build) !void {
             .{ .name = "phyzx-render", .module = phyzx_renderer_module },
             .{ .name = "phyzx-viewer", .module = phyzx_viewer_module },
             .{ .name = "phyzx-rollout", .module = phyzx_rollout_module },
-            .{ .name = "phyzx-optimizer", .module = phyzx_optimizer_module },
+            .{ .name = "phyzx-znlopt", .module = phyzx_znlopt_module },
         },
     });
 
