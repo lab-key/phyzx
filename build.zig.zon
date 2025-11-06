@@ -7,6 +7,9 @@
         .zmujoco = .{
             .path = "libs/zmujoco",
         },
+        .znlopt_mit = .{
+            .path = "libs/znlopt-mit",
+        },
     },
     .paths = .{
         "build.zig",

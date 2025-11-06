@@ -1,0 +1,15 @@
+.{
+    .name = .znlopt,
+    .fingerprint = 0x77554e5d5a91f937,
+    .version = "0.0.1",
+    .minimum_zig_version = "0.15.1",
+    .dependencies = .{
+        .lib_znlopt_mit = .{
+            .path = "libs/nlopt-mit",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+    },
+}

@@ -10,6 +10,12 @@ pub fn build(b: *std.Build) !void {
     });
     const zmujoco_module = zmujoco_dep.module("zmujoco");
 
+    const znlopt_mit_dep = b.dependency("znlopt_mit", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    const znlopt_mit_module = znlopt_mit_dep.module("znlopt-mit");
+
     // --- All other modules (no library artifacts) ---
     const phyzx_simulation_module = b.createModule(.{
         .root_source_file = b.path("src/viewer/simulation.zig"),
@@ -61,6 +67,15 @@ pub fn build(b: *std.Build) !void {
         },
     });
 
+    const phyzx_optimizer_module = b.createModule(.{
+        .root_source_file = b.path("src/phyzx-znlopt/optimizer.zig"),
+        .target = target,
+        .optimize = optimize,
+        .imports = &.{
+            .{ .name = "znlopt-mit", .module = znlopt_mit_module },
+        },
+    });
+
     const phyzx_module = b.createModule(.{
         .root_source_file = b.path("src/phyzx.zig"),
         .target = target,
@@ -71,6 +86,7 @@ pub fn build(b: *std.Build) !void {
             .{ .name = "phyzx-render", .module = phyzx_renderer_module },
             .{ .name = "phyzx-viewer", .module = phyzx_viewer_module },
             .{ .name = "phyzx-rollout", .module = phyzx_rollout_module },
+            .{ .name = "phyzx-optimizer", .module = phyzx_optimizer_module },
         },
     });
 

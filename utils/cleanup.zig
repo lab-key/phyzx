@@ -1,7 +1,24 @@
 const std = @import("std");
 const fs = std.fs;
 
-const SUBMODULE_PATH = "libs/upstream/zmujoco";
+const Submodule = struct {
+    url: []const u8,
+    path: []const u8,
+    vendor_path: []const u8,
+};
+
+const submodules = [_]Submodule{
+    .{
+        .url = "https://github.com/lab-key/zmujoco/",
+        .path = "libs/upstream/zmujoco",
+        .vendor_path = "libs/zmujoco",
+    },
+    .{
+        .url = "https://github.com/stevengj/nlopt.git",
+        .path = "libs/upstream/nlopt-mit",
+        .vendor_path = "libs/nlopt-mit",
+    },
+};
 
 /// Clears the contents of a directory recursively, but leaves the directory itself.
 /// Preserves .git directories to maintain submodule structure.
@@ -21,7 +38,7 @@ fn clearDirContents(path: []const u8) !void {
         switch (entry.kind) {
             .directory => try dir.deleteTree(entry.name),
             .file, .sym_link => try dir.deleteFile(entry.name),
-            else => {}, // Skip other types (pipes, sockets, etc.)
+            else => {},
         }
     }
 }
@@ -45,18 +62,23 @@ pub fn main() !void {
     };
 
     if (!force) {
-        std.debug.print("WARNING: This will delete all contents (except .git) from {s}.\n", .{SUBMODULE_PATH});
+        std.debug.print("WARNING: This will delete all contents (except .git) from the submodule paths.\n", .{});
+        for (submodules) |submodule| {
+            std.debug.print("  - {s}\n", .{submodule.path});
+        }
         std.debug.print("Run with --force or -f to proceed.\n", .{});
         return;
     }
 
     std.debug.print("Clearing submodule contents...\n", .{});
-    std.debug.print("  Clearing {s}...", .{SUBMODULE_PATH});
-    clearDirContents(SUBMODULE_PATH) catch |err| {
-        std.debug.print(" failed: {}\n", .{err});
-        return err;
-    };
-    std.debug.print(" done\n", .{});
+    for (submodules) |submodule| {
+        std.debug.print("  Clearing {s}...", .{submodule.path});
+        clearDirContents(submodule.path) catch |err| {
+            std.debug.print(" failed: {}\n", .{err});
+            return err;
+        };
+        std.debug.print(" done\n", .{});
+    }
 
     std.debug.print("Cleanup complete.\n", .{});
 }

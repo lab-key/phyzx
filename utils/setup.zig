@@ -2,9 +2,24 @@ const std = @import("std");
 const fs = std.fs;
 const process = std.process;
 
-const SUBMODULE_URL = "https://github.com/lab-key/zmujoco/";
-const SUBMODULE_PATH = "libs/upstream/zmujoco";
-const VENDOR_PATH = "libs/zmujoco";
+const Submodule = struct {
+    url: []const u8,
+    path: []const u8,
+    vendor_path: []const u8,
+};
+
+const submodules = [_]Submodule{
+    .{
+        .url = "https://github.com/lab-key/zmujoco/",
+        .path = "libs/upstream/zmujoco",
+        .vendor_path = "libs/zmujoco",
+    },
+    .{
+        .url = "https://github.com/lab-key/znlopt-mit.git",
+        .path = "libs/upstream/znlopt-mit",
+        .vendor_path = "libs/znlopt-mit",
+    },
+};
 
 // Whitelist of directories/files to copy
 const ALLOWED_DIRS = [_][]const u8{
@@ -109,26 +124,27 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    std.debug.print("Checking submodule...\n", .{});
-    if (!try isSubmoduleTracked(allocator, SUBMODULE_PATH)) {
-        std.debug.print("Adding submodule: {s}\n", .{SUBMODULE_PATH});
-        try runCommand(allocator, &[_][]const u8{
-            "git", "submodule", "add", SUBMODULE_URL, SUBMODULE_PATH,
-        });
-    } else {
-        std.debug.print("Submodule already tracked.\n", .{});
-    }
+    for (submodules) |submodule| {
+        std.debug.print("Checking submodule {s}...\n", .{submodule.path});
+        if (!try isSubmoduleTracked(allocator, submodule.path)) {
+            std.debug.print("Adding submodule: {s}\n", .{submodule.path});
+            try runCommand(allocator, &[_][]const u8{
+                "git", "submodule", "add", submodule.url, submodule.path,
+            });
+        } else {
+            std.debug.print("Submodule already tracked.\n", .{});
+        }
 
-    std.debug.print("Initializing and updating submodule...\n", .{});
-    try fs.cwd().makePath(SUBMODULE_PATH);
-    try runCommand(allocator, &[_][]const u8{ "git", "submodule", "update", "--init", "--force" });
+        std.debug.print("Initializing and updating submodule {s}...\n", .{submodule.path});
+        try fs.cwd().makePath(submodule.path);
+        try runCommand(allocator, &[_][]const u8{ "git", "submodule", "update", "--init", "--force" });
+
+        std.debug.print("Vendoring selected files from {s} to {s}...\n", .{ submodule.path, submodule.vendor_path });
+        try copySelectedDirs(allocator, submodule.path, submodule.vendor_path);
+    }
 
     std.debug.print("Submodule status:\n", .{});
     try runCommand(allocator, &[_][]const u8{ "git", "submodule", "status" });
 
-    std.debug.print("Vendoring selected files from {s} to {s}...\n", .{ SUBMODULE_PATH, VENDOR_PATH });
-    try copySelectedDirs(allocator, SUBMODULE_PATH, VENDOR_PATH);
-
     std.debug.print("Setup complete.\n", .{});
 }
-

@@ -1,3 +1,6 @@
 [submodule "libs/upstream/zmujoco"]
 	path = libs/upstream/zmujoco
 	url = https://github.com/lab-key/zmujoco/
+[submodule "libs/upstream/znlopt-mit"]
+	path = libs/upstream/znlopt-mit
+	url = https://github.com/lab-key/znlopt-mit.git
