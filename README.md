@@ -47,36 +47,32 @@ You should be able to just:
 ```
 git clone https://github.com/lab-key/phyzx.git
 # Everything in the examples directory gets built automatically
-zig build
-# So you can just
-./zig-out/bin/control_arm26 # Or ./zig-out/bin/load_arm26 - Just that until I integrate everything properly...
+zig build run-control_arm26 # Or ./zig-out/bin/load_arm26 - Just that until I integrate everything properly...
 ```
+
+
 
 This repository uses my [zmujoco] repository as a git submodule all the files are already fetched & everything is already setup.
 So you don't need the `setup.zig` & `cleanup.zig`
-In case you want to setup your own zmujoco / mujoco repositories. Check their `setup.zig` files and after that the phyzx `setup.zig` to have all the files / additional projects setup. Configure the `build.zig` files as you like. 
-Remember to configure the paths in `build.zig` files according to the way you configured the projects.
+In case you want to setup your own zmujoco / mujoco repositories. Check the `examples/local' directory use it as a general template and adjust it for your needs, filepaths etc.
 
 ## Current and Future plans / issues - TODO
 
 A lot of potential due to Zig being interoberable with C so I'm not sure if I should maybe even keep it ' mixed and dirty ' a bit and make examples on how to do it yourself or try to keep it pure Zig although that would be kinda redundant as Zig was designed with this feature, as C is an old language so.. 
 
 First of all I'm probably not aware of everything that exists and second reprogramming and wrapping everything properly is just too time consuming. 
-Also some of the `A.I.` / `control` stuff I'm testing is using OpenBLAS which you can't build directly with Zig as it uses Fortran for example.. So it's either making a Fortran compiler in Zig - using it as a module ( might not even be possible ), invoking the `make` command which is an external dependency ( maybe making that into a Zig module ) or just having a system-wide install of `OpenBLAS` as a dependency which is what I do internally but I don't have time to test everything everywhere properly there might be versioning issues especially across different OSes and I don't want to have the experimental stuff break something for someone - 'works on my machine' type of thing. But maybe I should make some experimental directory and instructions or a separate `build.zig`? Not sure how to go about everything. I'm definitely open and looking for suggestions a bit but I am trying to do something a bit more complicated and Zig is a new language so yeah it's hard to find existing big projects trying to combine things.. If you have any pointers for me let me know!
+Also some of the `A.I.` / `control` stuff I'm testing is using OpenBLAS which you can't build directly with Zig as it uses Fortran for example.. So it's either making a Fortran compiler in Zig - using it as a module ( might not even be possible ), invoking the `make` command which is an external dependency ( maybe making that into a Zig module ) or just having a system-wide install of `OpenBLAS` as a dependency which is what I do internally but I don't have time to test everything everywhere properly there might be versioning issues especially across different OSes and I don't want to have the experimental stuff break something for someone - 'works on my machine' type of thing. So I decided to add an `examples/experiment` directory and I'll make some `docs` on how to use it as well. I will place the `build.zig` files separately and then you combine / build based on what you need. 
 
 I'll see depends on the interest as well. 
 
-0. A proper GUI Editor and things mapped out for it but want more ML integration as well otherwise it won't have the same charm....
+  0. A proper GUI Editor and things mapped out for it but want more ML integration as well otherwise it won't have the same charm....
 
-1. Examples, Tests plus maybe setup some workflow for experimental stuff?
+  1. Examples, Tests setting everything for v0.0.1 properly
 
-1.1 Integrate minimize, kinematics & inverse-kinematics ( Zig modules ) properly
+  2. A nice clean way to integrate or point to C libraries that are not buildable with Zig at all. 
+  2.1 Adding 3rd party modelfiles
 
-2. A nice clean way to integrate or point to C libraries that are not buildable with Zig at all. 
-
-2.1 Adding 3rd party modelfiles
-
-3. All the demos and most things I am internally working on are done very ' dirty ' with direct C interop need to either properly wrap it or reprogram it - possibly start working on the experimental directory..
+  3. All the demos and most things I am internally working on are done very ' dirty ' with direct C interop need to either properly wrap it or reprogram it - possibly start working on the experimental directory..
 
 ## Documentation
 
