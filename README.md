@@ -11,7 +11,20 @@
 </p>
 
 
-# About
+# About - IMPORTANT
+
+This Project Is Currently On Hold
+
+I decided to implement most of the logic in C/C++ and just create bindings / API for all languages.
+
+I will eventually go back to this once zig stabilises a bit. I like the C/CPP way of doing things where the language changes less often than it takes me to implement something.. But I actually like Zig and it's useful, yeah it's just not stable enough at the moment to be the main language for a big development project. It's not terrible but it's an additional issue that can be avoided by using C99 ( As In 1999 ) 
+
+*** Android App / iOS App Was The Priority ***
+
+[![Video](https://img.youtube.com/vi/8toWW4z3klc/0.jpg)](https://www.youtube.com/shorts/8toWW4z3klc)
+
+For The Zig Bindings For That Engine / App checkout [zaxe] !
+
 
 This repository contains the Zig bindings and implementations for the MuJoCo C API. Plus a lot of additions to make it a full blown Robot Training Framework.
 
@@ -126,3 +139,4 @@ This is not an officially supported Google product.
 [changelog]: https://mujoco.readthedocs.io/en/latest/changelog.html
 [Python bindings]: https://mujoco.readthedocs.io/en/stable/python.html#python-bindings
 [PyPI]: https://pypi.org/project/mujoco/
+[zaxe]: https://github.com/lab-key/zaxe
