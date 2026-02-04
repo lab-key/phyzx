@@ -19,7 +19,7 @@ I decided to implement most of the logic in C/C++ and just create bindings / API
 
 I will eventually go back to this once zig stabilises a bit. I like the C/CPP way of doing things where the language changes less often than it takes me to implement something.. But I actually like Zig and it's useful, yeah it's just not stable enough at the moment to be the main language for a big development project. It's not terrible but it's an additional issue that can be avoided by using C99 ( As In 1999 ) 
 
-*** Android App / iOS App Was The Priority ***
+*****Android App / iOS App Was The Priority*****
 
 [![Video](https://img.youtube.com/vi/8toWW4z3klc/0.jpg)](https://www.youtube.com/shorts/8toWW4z3klc)
 
