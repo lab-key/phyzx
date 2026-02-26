@@ -21,7 +21,9 @@ I will eventually go back to this once zig stabilises a bit. I like the C/CPP wa
 
 *****Android App / iOS App Was The Priority*****
 
-[![Video](https://img.youtube.com/vi/8toWW4z3klc/0.jpg)](https://www.youtube.com/shorts/8toWW4z3klc)
+[![Video](https://img.youtube.com/vi/8toWW4z3klc/0.jpg)](https://www.youtube.com/shorts/8toWW4z3klc) [![Video](https://img.youtube.com/vi/72JILVU8FqI/0.jpg)](https://www.youtube.com/shorts/72JILVU8FqI)
+
+
 
 For The Zig Bindings For That Engine / App checkout [zaxe] !
 
